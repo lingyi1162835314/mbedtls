@@ -1,0 +1,113 @@
+name: mbedtls
+description: mbedtls 库提供了一组可单独使用和编译的加密组件，还可以使用单个配置头文件加入或排除这些组件。
+keywords:
+  - ssl
+  - tls
+  - x509
+author:
+  name: ARM
+license: Apache 2.0
+homepage: https://github.com/yoc-components/mbedtls
+
+depends:
+  - minilibc
+
+build_config:
+  include:
+    - include
+    - configs
+  cflag: '-fexpensive-optimizations -funroll-loops'
+  cxxflag: ''
+  asmflag: ''
+  define:
+    - CONFIG_USING_TLS
+
+source_file:
+  - "library/aes.c"
+  - "library/aesni.c"
+  - "library/arc4.c"
+  - "library/asn1parse.c"
+  - "library/asn1write.c"
+  - "library/base64.c"
+  - "library/bignum.c"
+  - "library/blowfish.c"
+  - "library/camellia.c"
+  - "library/ccm.c"
+  - "library/cipher.c"
+  - "library/cipher_wrap.c"
+  - "library/cmac.c"
+  - "library/ctr_drbg.c"
+  - "library/des.c"
+  - "library/dhm.c"
+  - "library/ecdh.c"
+  - "library/ecdsa.c"
+  - "library/ecjpake.c"
+  - "library/ecp.c"
+  - "library/ecp_curves.c"
+  - "library/entropy.c"
+  - "library/entropy_poll.c"
+  - "library/error.c"
+  - "library/gcm.c"
+  - "library/havege.c"
+  - "library/hmac_drbg.c"
+  - "library/md.c"
+  - "library/md2.c"
+  - "library/md4.c"
+  - "library/md5.c"
+  - "library/md_wrap.c"
+  - "library/memory_buffer_alloc.c"
+  - "library/oid.c"
+  - "library/padlock.c"
+  - "library/pem.c"
+  - "library/pk.c"
+  - "library/pk_wrap.c"
+  - "library/pkcs12.c"
+  - "library/pkcs5.c"
+  - "library/pkparse.c"
+  - "library/pkwrite.c"
+  - "library/platform.c"
+  - "library/ripemd160.c"
+  - "library/rsa.c"
+  - "library/sha1.c"
+  - "library/sha256.c"
+  - "library/sha512.c"
+  - "library/threading.c"
+  - "library/timing.c"
+  - "library/version.c"
+  - "library/version_features.c"
+  - "library/xtea.c"
+
+  - "library/certs.c"          ##
+  - "library/pkcs11.c"
+  - "library/x509.c"
+  - "library/x509_create.c"
+  - "library/x509_crl.c"
+  - "library/x509_crt.c"
+  - "library/x509_csr.c"
+  - "library/x509write_crt.c"
+  - "library/x509write_csr.c"
+
+  - "library/debug.c"          ##
+  - "library/net_sockets.c"
+  - "library/ssl_cache.c"
+  - "library/ssl_ciphersuites.c"
+  - "library/ssl_cli.c"
+  - "library/ssl_cookie.c"
+  - "library/ssl_srv.c"
+  - "library/ssl_ticket.c"
+  - "library/ssl_tls.c"
+
+  - "porting/tls_utils.c"      ##
+  - "porting/tls_net.c"
+
+# 组件安装， 将指定的一个或者多个文件安装到目标文件中。每个安装任务由： dest,与 source 组件， dest是相当路径，通常是相对于YoC SDK 安装目录。source是数组，可以使用通配符。
+install:                                       
+  - dest: "include/mbedtls/"
+    source:
+      - include/mbedtls/*.h
+      - include/porting/*.h
+
+  - dest: "include/mbedtls/configs/"
+    source:
+      - configs/*.h
+
